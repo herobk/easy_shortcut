@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Shortcut - Configuration</title>
+  <link rel="stylesheet" href="options.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="icons/icon128.png" alt="Logo" class="main-logo">
+      </div>
+    </header>
+
+    <main>
+      <section class="add-shortcut">
+        <h2>Add New Shortcut</h2>
+        <div class="form-group">
+          <label for="action-select">Action</label>
+          <select id="action-select">
+            <option value="pin_tab">Pin/Unpin Tab</option>
+            <option value="duplicate_tab">Duplicate Tab</option>
+            <option value="close_other_tabs">Close Other Tabs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="key-recorder">Hotkey</label>
+          <div id="key-recorder" class="recorder" tabindex="0">
+            Click & Press keys...
+          </div>
+          <p class="hint">Click to start recording, then press your combination.</p>
+        </div>
+        <button id="add-btn" class="primary-btn">Add Shortcut</button>
+      </section>
+
+      <section class="shortcut-list">
+        <h2>Your Shortcuts</h2>
+        <div id="shortcuts-container" class="grid">
+          <!-- Shortcuts will be injected here -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Easy Shortcut v1.0 | <span id="status-msg"></span></p>
+    </footer>
+  </div>
+  <script src="options.js"></script>
+</body>
+
+</html>
