@@ -22,23 +22,32 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function handleAction(action, tab) {
   if (!tab) return;
+  console.log("Background handling action:", action, "for tab:", tab.id);
 
-  switch (action) {
-    case "pin_tab":
-      chrome.tabs.update(tab.id, { pinned: !tab.pinned });
-      break;
-    case "duplicate_tab":
-      chrome.tabs.duplicate(tab.id);
-      break;
-    case "close_other_tabs":
-      chrome.tabs.query({ windowId: tab.windowId }, (tabs) => {
+  try {
+    switch (action) {
+      case "pin_tab":
+        await chrome.tabs.update(tab.id, { pinned: !tab.pinned });
+        break;
+      case "duplicate_tab":
+        await chrome.tabs.duplicate(tab.id);
+        break;
+      case "close_other_tabs": {
+        const tabs = await chrome.tabs.query({ windowId: tab.windowId });
         const otherTabIds = tabs
           .filter(t => t.id !== tab.id && !t.pinned) // Don't close current or pinned tabs
           .map(t => t.id);
-        chrome.tabs.remove(otherTabIds);
-      });
-      break;
-    default:
-      console.warn("Unknown action:", action);
+
+        console.log("Tabs to remove:", otherTabIds);
+        if (otherTabIds.length > 0) {
+          await chrome.tabs.remove(otherTabIds);
+        }
+        break;
+      }
+      default:
+        console.warn("Unknown action:", action);
+    }
+  } catch (error) {
+    console.error("Error executing action:", action, error);
   }
 }
