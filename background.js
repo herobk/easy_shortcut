@@ -22,7 +22,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function handleAction(action, tab) {
   if (!tab) return;
-  console.log("Background handling action:", action, "for tab:", tab.id);
 
   try {
     switch (action) {
@@ -38,14 +37,13 @@ async function handleAction(action, tab) {
           .filter(t => t.id !== tab.id && !t.pinned) // Don't close current or pinned tabs
           .map(t => t.id);
 
-        console.log("Tabs to remove:", otherTabIds);
         if (otherTabIds.length > 0) {
           await chrome.tabs.remove(otherTabIds);
         }
         break;
       }
       default:
-        console.warn("Unknown action:", action);
+        break;
     }
   } catch (error) {
     console.error("Error executing action:", action, error);

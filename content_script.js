@@ -23,7 +23,6 @@ window.addEventListener("keydown", (event) => {
     }
 
     const pressedCombo = getComboString(event);
-    console.log("Detected combo:", pressedCombo);
     const match = shortcuts.find(s => s.combo === pressedCombo);
 
     if (match) {
